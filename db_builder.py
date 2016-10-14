@@ -16,7 +16,7 @@ c = db.cursor()    #facilitate db ops
 
 
 q = "CREATE TABLE students (name TEXT, age INTEGER, id INTEGER)"
-#c.execute(q)    #run SQL query
+c.execute(q)    #run SQL query
 fObj = open("peeps.csv") 
 d=csv.DictReader(fObj)
 for k in d:
@@ -25,11 +25,14 @@ for k in d:
 
 
 
-'''
-q = "CREATE TABLE courses (code TEXT, id INTEGER, mark INTEGER)"
-
+q = "CREATE TABLE courses (code TEXT,  mark INTEGER, id INTEGER)"
 c.execute(q)
-'''
+fObj = open("course.csv")
+d=csv.DictReader(fObj)
+for k in d:
+    p = "INSERT INTO course VALUES ("+k['code']+","+k['mark']+","+k['id']+")"
+    c.execute(p)
+
 
 #==========================================================
 db.commit() #save changes
