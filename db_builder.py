@@ -20,22 +20,20 @@ c.execute(q)    #run SQL query
 fObj = open("peeps.csv") 
 d=csv.DictReader(fObj)
 for k in d:
-    p = "INSERT INTO students VALUES ("+k['name']+","+k['age']+","+k['id']+")"
+    p = "INSERT INTO students VALUES ('" + k['name'] + "'," + k['age'] + "," + k['id'] + ")"
     c.execute(p)
 
 
-
-q = "CREATE TABLE courses (code TEXT,  mark INTEGER, id INTEGER)"
+q = "CREATE TABLE courses (code TEXT, mark INTEGER, id INTEGER)"
 c.execute(q)
-fObj = open("course.csv")
+fObj = open("courses.csv")
 d=csv.DictReader(fObj)
 for k in d:
-    p = "INSERT INTO course VALUES ("+k['code']+","+k['mark']+","+k['id']+")"
+    p = "INSERT INTO courses VALUES ('" + k['code'] + "'," + k['mark'] + "," + k['id'] + ")"
     c.execute(p)
 
+fObj.close()
 
 #==========================================================
 db.commit() #save changes
 db.close()  #close database
-
-
