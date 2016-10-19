@@ -1,6 +1,6 @@
 import sqlite3   #enable control of an sqlite database
 import csv       #facilitates CSV I/O
-
+import get_averages
 
 
 f="discobandit.db"
@@ -42,16 +42,10 @@ for record in sel:
         d[record[0]] = [[], record[2], 0] # [] is the placeholder for grades, 0 is the placeholder for avg
     d[record[0]][0].append(record[1]) # add an entry... { name : [ [list of grades], id, avg ] }
 
-# Compute the average for each student.
-
-for name in d:
-    sum = 0
-    for grade in d[name][0]:
-        sum += grade
-    d[name][2] = sum / ( len(d[name][0]) * 1.0 )
+# Compute average
+get_averages.average(d)
 
 # Display each students name, id and average.
-
 for name in d:
     print "%s, %d, %f"%(name, d[name][1], d[name][2])
 
