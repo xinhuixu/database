@@ -33,19 +33,27 @@ fObj.close()
 
 #==========================================================
 # Look up the grades for each student.
-# Compute the average for each student.
-# Display each students name, id and average.
 
-cmd = "SELECT name, mark FROM students, courses WHERE students.id = courses.id"
+cmd = "SELECT name, mark, students.id FROM students, courses WHERE students.id = courses.id"
 sel = c.execute(cmd)
 d = {}
 for record in sel:
-    if record[0] not in d:
-        
+    if record[0] not in d: # if the name is not in the dictionary
+        d[record[0]] = [[], record[2], 0] # [] is the placeholder for grades, 0 is the placeholder for avg
+    d[record[0]][0].append(record[1]) # add an entry... { name : [ [list of grades], id, avg ] }
 
+# Compute the average for each student.
 
+for name in d:
+    sum = 0
+    for grade in d[name][0]:
+        sum += grade
+    d[name][2] = sum / ( len(d[name][0]) * 1.0 )
 
+# Display each students name, id and average.
 
+for name in d:
+    print "%s, %d, %f"%(name, d[name][1], d[name][2])
 
 #==========================================================
 db.commit() #save changes
